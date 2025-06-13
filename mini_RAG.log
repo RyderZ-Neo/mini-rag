@@ -1,0 +1,795 @@
+2025-06-13 13:49:42,164 - mini_RAG - INFO - Original User Query: My computer takes forever to boot up and open programs
+2025-06-13 13:49:49,563 - httpx - INFO - HTTP Request: POST https://api.openai.com/v1/chat/completions "HTTP/1.1 200 OK"
+2025-06-13 13:49:49,565 - mini_RAG - INFO - Expanded Query Analysis: INTENT: The user is seeking information and potential solutions to improve the performance of their computer, specifically regarding boot times and program loading speeds. They may be looking for hardware upgrades, software solutions, or troubleshooting advice.
+
+SLOTS: 
+- Product type/category: Computer, possibly components (e.g., SSD, RAM)
+- Specifications: Speed improvement, possibly related to RAM, storage type (SSD vs HDD), and processor performance
+- Brand preferences: Not explicitly mentioned
+- Price indicators: Not explicitly mentioned
+- Usage requirements: Faster boot times, improved program loading
+- Any other constraints: None specified, but might imply compatibility with existing system
+
+QUERIES:
+1. "What SSD upgrades can help my computer boot faster and improve program loading speeds?"
+2. "How can I increase my computer's RAM to reduce boot time and enhance performance when opening applications?"
+3. "Tips for speeding up computer boot times and program launches, including hardware and software solutions."
+4. "Best practices for troubleshooting slow computer boot and program loading issues, including potential hardware upgrades."
+5. "What components should I upgrade to make my computer start up quickly and run programs faster, considering compatibility with my current setup?"
+2025-06-13 13:49:49,565 - mini_RAG - INFO - Using expanded query: "What SSD upgrades can help my computer boot faster and improve program loading speeds?"
+2025-06-13 13:49:49,565 - mini_RAG - INFO - Using search pipeline: Fusion Search (RRF)
+2025-06-13 13:49:49,565 - mini_RAG - INFO - Connecting to Qdrant at http://localhost:6333...
+2025-06-13 13:49:50,276 - httpx - INFO - HTTP Request: GET http://localhost:6333 "HTTP/1.1 200 OK"
+2025-06-13 13:49:50,277 - mini_RAG - INFO - Initializing OpenAI embeddings (text-embedding-3-large)...
+2025-06-13 13:49:50,298 - mini_RAG - INFO - Loading cross-encoder model svalabs/cross-electra-ms-marco-german-uncased...
+2025-06-13 13:49:52,532 - mini_RAG - INFO - PERFORMANCE: Initialization for 'models_and_client' took 2966.61ms
+2025-06-13 13:49:52,532 - mini_RAG - INFO - Successfully initialized Qdrant client and models.
+2025-06-13 13:49:53,412 - httpx - INFO - HTTP Request: POST https://api.openai.com/v1/embeddings "HTTP/1.1 200 OK"
+2025-06-13 13:49:53,661 - mini_RAG - INFO - PERFORMANCE: Query encoding for '"What SSD upgrades can help my computer boot faster and improve program loading speeds?"' took 1129.78ms
+2025-06-13 13:49:56,346 - httpx - INFO - HTTP Request: POST http://localhost:6333/collections/shop_api_openai_embeddings_collection/points/query "HTTP/1.1 200 OK"
+2025-06-13 13:49:56,810 - mini_RAG - INFO - PERFORMANCE: Search and rerank for '"What SSD upgrades can help my computer boot faster and improve program loading speeds?"' took 7245.60ms, details: search: 2882.6ms, rerank: 266.3ms, hits: 30, reranked: 10
+2025-06-13 13:50:06,357 - httpx - INFO - HTTP Request: POST https://api.openai.com/v1/chat/completions "HTTP/1.1 200 OK"
+2025-06-13 13:50:06,357 - mini_RAG - INFO - Final Query Used: "What SSD upgrades can help my computer boot faster and improve program loading speeds?"
+2025-06-13 13:50:06,358 - mini_RAG - INFO - Answer: {
+  "response_type": "PRODUCT_LIST",
+  "message_text": "To help your computer boot faster and improve program loading speeds, here are some excellent SSD upgrade options. Please choose from the following:",
+  "products": [
+    {
+      "product_id": "16557",
+      "name": "SSD 128GB Silicon Power 2.5\" SATAIII A55 3D Nand TLC",
+      "product_url": "https://shop.api.de/product/details/243567",
+      "thumbnail_url": "https://cnetcdn.continue.de/L2Y2L2UwL2Y2ZTBkNmFhLWUxZDAtNGE0Yi05YWZlLWJjNjRkNmYyMWZmNi5qcGc=",
+      "description": "Transform your computing experience with the SSD 128GB Silicon Power, designed to deliver lightning-fast boot times and application loading, making your system feel brand new."
+    },
+    {
+      "product_id": "16558",
+      "name": "SSD 256GB Silicon Power 2.5\" SATAIII A55 3D Nand TLC",
+      "product_url": "https://shop.api.de/product/details/243569",
+      "thumbnail_url": "https://cnetcdn.continue.de/Lzc3L2RhLzc3ZGFmODdkLTZjODQtNDc1ZS1hNGI4LTM5ZDdkMmFhNDlmYy5qcGc=",
+      "description": "Experience enhanced performance with the SSD 256GB Silicon Power, providing ample space and unparalleled speed for all your applications, making multitasking a breeze."
+    },
+    {
+      "product_id": "18544",
+      "name": "SSD 1TB Silicon Power 2.5\" SATAIII A55 3D Nand TLC",
+      "product_url": "https://shop.api.de/product/details/252968",
+      "thumbnail_url": "https://cnetcdn.continue.de/L2E0L2VhL2E0ZWFkNzM3LTIwNzQtNGIwYS05YzZjLTZmYTg4ZDQzZmViYi5qcGc=",
+      "description": "Unlock the full potential of your system with the SSD 1TB Silicon Power, offering massive storage capacity and ultra-fast speeds, perfect for gamers and professionals alike."
+    }
+  ]
+}
+2025-06-13 13:58:21,273 - mini_RAG - INFO - Original User Query: My computer takes forever to boot up and open programs
+2025-06-13 13:58:28,570 - httpx - INFO - HTTP Request: POST https://api.openai.com/v1/chat/completions "HTTP/1.1 200 OK"
+2025-06-13 13:58:28,583 - mini_RAG - INFO - Expanded Query Analysis: INTENT: The user is seeking solutions to improve their computer's performance, specifically regarding slow boot-up times and program loading speeds. They may be looking for hardware upgrades, software solutions, or troubleshooting advice.
+
+SLOTS: 
+- Product type/category: Computer hardware (e.g., SSDs, RAM)
+- Specifications: Speed/Performance, potentially RAM size, storage type (SSD vs. HDD)
+- Brand preferences: Not explicitly stated, but may imply interest in reputable brands
+- Price indicators: Not specified, but likely looking for reasonably priced options
+- Usage requirements: Needs faster boot and program loading times
+- Any other constraints: Compatibility with current computer system
+
+QUERIES:
+1. "What are the best SSD upgrades to speed up my computer's boot time and program loading?"
+2. "How much RAM do I need to improve my computer's performance for faster booting and application launches?"
+3. "Which brands offer reliable solid-state drives to reduce boot times for Windows computers?"
+4. "What software solutions can help optimize my computer's startup time and program responsiveness?"
+5. "Can upgrading to an SSD from an HDD significantly improve boot and load times for my desktop computer?"
+2025-06-13 13:58:28,583 - mini_RAG - INFO - Using expanded query: "What are the best SSD upgrades to speed up my computer's boot time and program loading?"
+2025-06-13 13:58:28,583 - mini_RAG - INFO - Using search pipeline: Fusion Search (RRF)
+2025-06-13 13:58:28,583 - mini_RAG - INFO - Connecting to Qdrant at http://localhost:6333...
+2025-06-13 13:58:29,249 - httpx - INFO - HTTP Request: GET http://localhost:6333 "HTTP/1.1 200 OK"
+2025-06-13 13:58:29,249 - mini_RAG - INFO - Initializing OpenAI embeddings (text-embedding-3-large)...
+2025-06-13 13:58:29,273 - mini_RAG - INFO - Loading cross-encoder model svalabs/cross-electra-ms-marco-german-uncased...
+2025-06-13 13:58:31,433 - mini_RAG - INFO - PERFORMANCE: Initialization for 'models_and_client' took 2850.47ms
+2025-06-13 13:58:31,433 - mini_RAG - INFO - Successfully initialized Qdrant client and models.
+2025-06-13 13:58:32,346 - httpx - INFO - HTTP Request: POST https://api.openai.com/v1/embeddings "HTTP/1.1 200 OK"
+2025-06-13 13:58:32,626 - mini_RAG - INFO - PERFORMANCE: Query encoding for '"What are the best SSD upgrades to speed up my computer's boot time and program loading?"' took 1192.64ms
+2025-06-13 13:58:35,185 - httpx - INFO - HTTP Request: POST http://localhost:6333/collections/shop_api_openai_embeddings_collection/points/query "HTTP/1.1 200 OK"
+2025-06-13 13:58:35,678 - mini_RAG - INFO - PERFORMANCE: Search and rerank for '"What are the best SSD upgrades to speed up my computer's boot time and program loading?"' took 7094.66ms, details: search: 2777.8ms, rerank: 273.4ms, hits: 30, reranked: 10
+2025-06-13 13:58:45,526 - httpx - INFO - HTTP Request: POST https://api.openai.com/v1/chat/completions "HTTP/1.1 200 OK"
+2025-06-13 13:58:45,526 - mini_RAG - INFO - Final Query Used: "What are the best SSD upgrades to speed up my computer's boot time and program loading?"
+2025-06-13 13:58:45,526 - mini_RAG - INFO - Answer: {
+  "response_type": "PRODUCT_LIST",
+  "message_text": "Looking to speed up your computer's boot time and program loading? Here are some fantastic SSD upgrade options that can give your system the performance boost it needs. Please choose from the following options:",
+  "products": [
+    {
+      "product_id": "16558",
+      "name": "SSD 256GB Silicon Power 2.5\" SATAIII A55 3D Nand TLC",
+      "product_url": "https://shop.api.de/product/details/243569",
+      "thumbnail_url": "https://cnetcdn.continue.de/Lzc3L2RhLzc3ZGFmODdkLTZjODQtNDc1ZS1hNGI4LTM5ZDdkMmFhNDlmYy5qcGc=",
+      "description": "Transform your sluggish computer into a speed machine with the 256GB Silicon Power SSD, designed for lightning-fast boot times and application loads."
+    },
+    {
+      "product_id": "16557",
+      "name": "SSD 128GB Silicon Power 2.5\" SATAIII A55 3D Nand TLC",
+      "product_url": "https://shop.api.de/product/details/243567",
+      "thumbnail_url": "https://cnetcdn.continue.de/L2Y2L2UwL2Y2ZTBkNmFhLWUxZDAtNGE0Yi05YWZlLWJjNjRkNmYyMWZmNi5qcGc=",
+      "description": "Elevate your computing experience with the 128GB Silicon Power SSD, offering remarkable speed enhancements at a budget-friendly price."
+    },
+    {
+      "product_id": "18543",
+      "name": "SSD 512GB Silicon Power 2.5\" SATAIII A55 3D Nand TLC",
+      "product_url": "https://shop.api.de/product/details/252966",
+      "thumbnail_url": "https://cnetcdn.continue.de/Lzk2LzZkLzk2NmQ2YWNiLTJjYjAtNDczYy1iNjQ2LTMxM2RhMmZlY2QwMy5qcGc=",
+      "description": "Maximize your storage and speed with the 512GB Silicon Power SSD, perfect for users seeking high performance without breaking the bank."
+    }
+  ]
+}
+2025-06-13 14:02:50,270 - mini_RAG - INFO - Original User Query: My computer takes forever to boot up and open programs
+2025-06-13 14:02:56,112 - httpx - INFO - HTTP Request: POST https://api.openai.com/v1/chat/completions "HTTP/1.1 200 OK"
+2025-06-13 14:02:56,113 - mini_RAG - INFO - Expanded Query Analysis: INTENT: The user is seeking assistance to improve the performance of their computer, specifically regarding slow boot-up times and program loading. They may be looking for products or solutions that can enhance their computer's speed.
+
+SLOTS: 
+- Product type/category: computer performance enhancement (e.g., SSD, RAM upgrade)
+- Specifications: speed improvement, storage capacity, memory capacity
+- Brand preferences: unspecified (but may prefer reputable brands known for performance)
+- Price indicators: unspecified budget
+- Usage requirements: faster boot-up and program loading times
+- Any other constraints: compatibility with existing computer hardware
+
+QUERIES:
+1. "What are the best solid-state drives (SSDs) to improve my computer's boot-up speed and program loading times?"
+2. "How can I upgrade the RAM in my computer to reduce boot time and enhance performance for opening applications?"
+3. "Looking for recommendations on high-speed SSDs or RAM upgrades for faster computer start-up and application performance."
+4. "What performance-enhancing products can help my computer boot faster and open programs quickly?"
+5. "Which SSDs or RAM upgrades are most effective for speeding up computer boot times and improving program launch speed?"
+2025-06-13 14:02:56,113 - mini_RAG - INFO - Using expanded query: "What are the best solid-state drives (SSDs) to improve my computer's boot-up speed and program loading times?"
+2025-06-13 14:02:56,114 - mini_RAG - INFO - Using search pipeline: Fusion Search (RRF)
+2025-06-13 14:02:56,114 - mini_RAG - INFO - Connecting to Qdrant at http://localhost:6333...
+2025-06-13 14:02:56,924 - httpx - INFO - HTTP Request: GET http://localhost:6333 "HTTP/1.1 200 OK"
+2025-06-13 14:02:56,925 - mini_RAG - INFO - Initializing OpenAI embeddings (text-embedding-3-large)...
+2025-06-13 14:02:56,947 - mini_RAG - INFO - Loading cross-encoder model svalabs/cross-electra-ms-marco-german-uncased...
+2025-06-13 14:02:59,790 - mini_RAG - INFO - PERFORMANCE: Initialization for 'models_and_client' took 3676.25ms
+2025-06-13 14:02:59,790 - mini_RAG - INFO - Successfully initialized Qdrant client and models.
+2025-06-13 14:03:00,509 - httpx - INFO - HTTP Request: POST https://api.openai.com/v1/embeddings "HTTP/1.1 200 OK"
+2025-06-13 14:03:00,613 - mini_RAG - INFO - PERFORMANCE: Query encoding for '"What are the best solid-state drives (SSDs) to improve my computer's boot-up speed and program loading times?"' took 823.00ms
+2025-06-13 14:03:03,683 - httpx - INFO - HTTP Request: POST http://localhost:6333/collections/shop_api_openai_embeddings_collection/points/query "HTTP/1.1 200 OK"
+2025-06-13 14:03:03,951 - mini_RAG - INFO - PERFORMANCE: Search and rerank for '"What are the best solid-state drives (SSDs) to improve my computer's boot-up speed and program loading times?"' took 7837.61ms, details: search: 3070.9ms, rerank: 267.1ms, hits: 30, reranked: 10
+2025-06-13 14:03:14,947 - httpx - INFO - HTTP Request: POST https://api.openai.com/v1/chat/completions "HTTP/1.1 200 OK"
+2025-06-13 14:03:14,948 - mini_RAG - INFO - Final Query Used: "What are the best solid-state drives (SSDs) to improve my computer's boot-up speed and program loading times?"
+2025-06-13 14:03:14,948 - mini_RAG - INFO - Answer: {
+  "response_type": "PRODUCT_LIST",
+  "message_text": "Here are some top solid-state drives (SSDs) to significantly improve your computer's boot-up speed and program loading times. Please choose from the options below:",
+  "products": [
+    {
+      "product_id": "78359",
+      "name": "HPE 7.68TB NVMe RI E3S EC1 CM7 SSD",
+      "product_url": "https://shop.api.de/product/details/459823",
+      "thumbnail_url": "https://cnetcdn.continue.de/LzI5L2Y3LzI5Zjc4OTQzLWM5ODQtNGY1Zi04ZDQyLTZhZTRkMDI0NWUwZC5qcGc=",
+      "description": "Unlock unparalleled performance with the HPE 7.68TB NVMe SSD, engineered for high-demand applications requiring intense read operations and lightning-fast data transfers."
+    },
+    {
+      "product_id": "78356",
+      "name": "HPE 3.84TB NVMe RI E3S EC1 CM7 SSD",
+      "product_url": "https://shop.api.de/product/details/459820",
+      "thumbnail_url": "https://cnetcdn.continue.de/LzI5L2Y3LzI5Zjc4OTQzLWM5ODQtNGY1Zi04ZDQyLTZhZTRkMDI0NWUwZC5qcGc=",
+      "description": "Experience a perfect blend of speed and capacity with the HPE 3.84TB NVMe SSD, designed to accelerate your applications with minimal latency and maximum reliability."
+    },
+    {
+      "product_id": "78360",
+      "name": "HPE 15.36TB NVMe RI E3S EC1 CM7 SSD",
+      "product_url": "https://shop.api.de/product/details/459824",
+      "thumbnail_url": "https://cnetcdn.continue.de/LzI5L2Y3LzI5Zjc4OTQzLWM5ODQtNGY1Zi04ZDQyLTZhZTRkMDI0NWUwZC5qcGc=",
+      "description": "Supercharge your data-driven tasks with the HPE 15.36TB NVMe SSD, offering massive storage and incredible read speeds to enhance your system's performance in demanding environments."
+    }
+  ]
+}
+2025-06-13 14:09:46,185 - mini_RAG - INFO - Original User Query: My computer takes forever to boot up and open programs
+2025-06-13 14:09:51,062 - httpx - INFO - HTTP Request: POST https://api.openai.com/v1/chat/completions "HTTP/1.1 200 OK"
+2025-06-13 14:09:51,064 - mini_RAG - INFO - Expanded Query Analysis: INTENT: The user is seeking information on how to improve their computer's performance, specifically regarding slow boot-up times and sluggish program opening. They may be looking for potential solutions, upgrades, or diagnostic tools that can help resolve these issues.
+
+SLOTS: 
+- Product type/category: Computer (likely a desktop or laptop)
+- Specifications: Fast boot-up, faster program opening, potential hardware upgrades (e.g., SSD, RAM)
+- Brand preferences: Not specified, but could infer general brands known for performance
+- Price indicators: Not specified, but could imply a need for cost-effective solutions
+- Usage requirements: Enhanced performance for booting and running programs
+- Any other constraints: No specific constraints mentioned
+
+QUERIES:
+1. "What upgrades can I make to my computer to reduce boot-up time and improve program loading speed?"
+2. "Best SSD options for faster boot times and program performance for my desktop or laptop?"
+3. "How can I speed up my computer’s start-up and application opening times with hardware improvements?"
+4. "What are the most effective ways to enhance my computer's performance for quicker boot-up and program access?"
+5. "Looking for budget-friendly solutions or upgrades to help my laptop boot up faster and open programs quickly."
+2025-06-13 14:09:51,064 - mini_RAG - INFO - Using expanded query: "What upgrades can I make to my computer to reduce boot-up time and improve program loading speed?"
+2025-06-13 14:09:51,064 - mini_RAG - INFO - Using search pipeline: Fusion Search (RRF)
+2025-06-13 14:09:51,064 - mini_RAG - INFO - Connecting to Qdrant at http://localhost:6333...
+2025-06-13 14:09:51,744 - httpx - INFO - HTTP Request: GET http://localhost:6333 "HTTP/1.1 200 OK"
+2025-06-13 14:09:51,744 - mini_RAG - INFO - Initializing OpenAI embeddings (text-embedding-3-large)...
+2025-06-13 14:09:51,766 - mini_RAG - INFO - Loading cross-encoder model svalabs/cross-electra-ms-marco-german-uncased...
+2025-06-13 14:09:53,948 - mini_RAG - INFO - PERFORMANCE: Initialization for 'models_and_client' took 2884.62ms
+2025-06-13 14:09:53,948 - mini_RAG - INFO - Successfully initialized Qdrant client and models.
+2025-06-13 14:09:55,432 - httpx - INFO - HTTP Request: POST https://api.openai.com/v1/embeddings "HTTP/1.1 200 OK"
+2025-06-13 14:09:55,585 - mini_RAG - INFO - PERFORMANCE: Query encoding for '"What upgrades can I make to my computer to reduce boot-up time and improve program loading speed?"' took 1636.08ms
+2025-06-13 14:09:57,597 - httpx - INFO - HTTP Request: POST http://localhost:6333/collections/shop_api_openai_embeddings_collection/points/query "HTTP/1.1 200 OK"
+2025-06-13 14:09:57,847 - mini_RAG - INFO - PERFORMANCE: Search and rerank for '"What upgrades can I make to my computer to reduce boot-up time and improve program loading speed?"' took 6783.68ms, details: search: 2013.9ms, rerank: 248.8ms, hits: 30, reranked: 10
+2025-06-13 14:10:09,976 - httpx - INFO - HTTP Request: POST https://api.openai.com/v1/chat/completions "HTTP/1.1 200 OK"
+2025-06-13 14:10:09,977 - mini_RAG - INFO - Final Query Used: "What upgrades can I make to my computer to reduce boot-up time and improve program loading speed?"
+2025-06-13 14:10:09,977 - mini_RAG - INFO - Answer: {
+  "response_type": "PRODUCT_LIST",
+  "message_text": "To significantly reduce boot-up time and enhance program loading speed, consider upgrading to one of the following SSD options. Each of these solid-state drives offers exceptional performance and reliability. Which one would you like to choose?",
+  "products": [
+    {
+      "product_id": "107346",
+      "name": "SSD 4TB Silicon Power 2.5\" SATAIII A55 3D Nand TLC BULK",
+      "product_url": "https://shop.api.de/product/details/517581",
+      "thumbnail_url": "https://cnetcdn.continue.de/L2NmLzA0L2NmMDRhZWYwLTU3OGMtNGE1ZS05NDVhLTQ1NjhhZmI4NGYwOC5qcGc=",
+      "description": "Transform your computer's performance with the massive 4TB SSD from Silicon Power, designed to drastically cut boot-up times and load applications in the blink of an eye."
+    },
+    {
+      "product_id": "16557",
+      "name": "SSD 128GB Silicon Power 2.5\" SATAIII A55 3D Nand TLC",
+      "product_url": "https://shop.api.de/product/details/243567",
+      "thumbnail_url": "https://cnetcdn.continue.de/L2Y2L2UwL2Y2ZTBkNmFhLWUxZDAtNGE0Yi05YWZlLWJjNjRkNmYyMWZmNi5qcGc=",
+      "description": "Experience lightning-fast boot speeds and quick application access with the compact yet powerful 128GB SSD from Silicon Power—perfect for upgrading your system without breaking the bank."
+    },
+    {
+      "product_id": "16558",
+      "name": "SSD 256GB Silicon Power 2.5\" SATAIII A55 3D Nand TLC",
+      "product_url": "https://shop.api.de/product/details/243569",
+      "thumbnail_url": "https://cnetcdn.continue.de/Lzc3L2RhLzc3ZGFmODdkLTZjODQtNDc1ZS1hNGI4LTM5ZDdkMmFhNDlmYy5qcGc=",
+      "description": "Upgrade your computer with the ultra-reliable 256GB SSD from Silicon Power, engineered to deliver rapid boot times and swift program launches that will transform your computing experience."
+    }
+  ]
+}
+2025-06-13 14:12:18,794 - mini_RAG - INFO - Original User Query: My computer takes forever to boot up and open programs
+2025-06-13 14:12:24,168 - httpx - INFO - HTTP Request: POST https://api.openai.com/v1/chat/completions "HTTP/1.1 200 OK"
+2025-06-13 14:12:24,170 - mini_RAG - INFO - Expanded Query Analysis: INTENT: The user is seeking solutions to improve their computer's performance, specifically regarding slow boot times and program loading speeds. They might be looking for products, upgrades, or information on how to enhance their current setup.
+
+SLOTS: 
+- Product type/category: computer, hardware upgrades, software solutions
+- Specifications: speed, performance enhancement
+- Brand preferences: none specified
+- Price indicators: none specified
+- Usage requirements: faster boot time, faster program loading
+- Any other constraints: none specified
+
+QUERIES:
+1. "Best hardware upgrades to improve boot speed and program loading for my slow computer"
+2. "Solutions for a computer that takes a long time to start up and run applications"
+3. "How to speed up a computer that is slow to boot and open programs efficiently"
+4. "Top software tools to enhance boot time and application loading speed on my computer"
+5. "Recommendations for fast SSDs or RAM upgrades to reduce boot time and improve program performance"
+2025-06-13 14:12:24,170 - mini_RAG - INFO - Using expanded query: "Best hardware upgrades to improve boot speed and program loading for my slow computer"
+2025-06-13 14:12:24,170 - mini_RAG - INFO - Using search pipeline: Fusion Search (RRF)
+2025-06-13 14:12:24,170 - mini_RAG - INFO - Connecting to Qdrant at http://localhost:6333...
+2025-06-13 14:12:24,933 - httpx - INFO - HTTP Request: GET http://localhost:6333 "HTTP/1.1 200 OK"
+2025-06-13 14:12:24,934 - mini_RAG - INFO - Initializing OpenAI embeddings (text-embedding-3-large)...
+2025-06-13 14:12:24,956 - mini_RAG - INFO - Loading cross-encoder model svalabs/cross-electra-ms-marco-german-uncased...
+2025-06-13 14:12:28,004 - mini_RAG - INFO - PERFORMANCE: Initialization for 'models_and_client' took 3834.36ms
+2025-06-13 14:12:28,004 - mini_RAG - INFO - Successfully initialized Qdrant client and models.
+2025-06-13 14:12:28,823 - httpx - INFO - HTTP Request: POST https://api.openai.com/v1/embeddings "HTTP/1.1 200 OK"
+2025-06-13 14:12:29,003 - mini_RAG - INFO - PERFORMANCE: Query encoding for '"Best hardware upgrades to improve boot speed and program loading for my slow computer"' took 998.14ms
+2025-06-13 14:12:30,980 - httpx - INFO - HTTP Request: POST http://localhost:6333/collections/shop_api_openai_embeddings_collection/points/query "HTTP/1.1 200 OK"
+2025-06-13 14:12:31,253 - mini_RAG - INFO - PERFORMANCE: Search and rerank for '"Best hardware upgrades to improve boot speed and program loading for my slow computer"' took 7082.79ms, details: search: 1979.1ms, rerank: 270.8ms, hits: 30, reranked: 10
+2025-06-13 14:12:40,292 - httpx - INFO - HTTP Request: POST https://api.openai.com/v1/chat/completions "HTTP/1.1 200 OK"
+2025-06-13 14:12:40,292 - mini_RAG - INFO - Final Query Used: "Best hardware upgrades to improve boot speed and program loading for my slow computer"
+2025-06-13 14:12:40,292 - mini_RAG - INFO - Answer: ```json
+{
+  "response_type": "PRODUCT_LIST",
+  "message_text": "To enhance your computer's boot speed and improve program loading times, consider these excellent SSD upgrades. Choose the one that best fits your needs!",
+  "products": [
+    {
+      "product_id": "16558",
+      "name": "SSD 256GB Silicon Power 2.5\" SATAIII A55 3D Nand TLC",
+      "product_url": "https://shop.api.de/product/details/243569",
+      "thumbnail_url": "https://cnetcdn.continue.de/Lzc3L2RhLzc3ZGFmODdkLTZjODQtNDc1ZS1hNGI4LTM5ZDdkMmFhNDlmYy5qcGc=",
+      "description": "Boost your computer's performance with the 256GB Silicon Power SSD, designed for lightning-fast boot times and efficient application loading, making your everyday computing experience seamless."
+    },
+    {
+      "product_id": "16557",
+      "name": "SSD 128GB Silicon Power 2.5\" SATAIII A55 3D Nand TLC",
+      "product_url": "https://shop.api.de/product/details/243567",
+      "thumbnail_url": "https://cnetcdn.continue.de/L2Y2L2UwL2Y2ZTBkNmFhLWUxZDAtNGE0Yi05YWZlLWJjNjRkNmYyMWZmNi5qcGc=",
+      "description": "Transform your slow computer into a speedy powerhouse with the 128GB Silicon Power SSD, offering a perfect balance of capacity and performance for users looking to enhance their system without breaking the bank."
+    },
+    {
+      "product_id": "18543",
+      "name": "SSD 512GB Silicon Power 2.5\" SATAIII A55 3D Nand TLC",
+      "product_url": "https://shop.api.de/product/details/252966",
+      "thumbnail_url": "https://cnetcdn.continue.de/Lzk2LzZkLzk2NmQ2YWNiLTJjYjAtNDczYy1iNjQ2LTMxM2RhMmZlY2QwMy5qcGc=",
+      "description": "Experience unparalleled speed and efficiency with the 512GB Silicon Power SSD, the ultimate upgrade for users who demand rapid boot times and swift access to applications, ensuring your system runs at its best."
+    }
+  ]
+}
+```
+2025-06-13 14:12:40,293 - mini_RAG - ERROR - Error parsing JSON response: Expecting value: line 1 column 1 (char 0)
+2025-06-13 14:12:40,293 - mini_RAG - ERROR - Raw response: ```json
+{
+  "response_type": "PRODUCT_LIST",
+  "message_text": "To enhance your computer's boot speed and improve program loading times, consider these excellent SSD upgrades. Choose the one that best fits your needs!",
+  "products": [
+    {
+      "product_id": "16558",
+      "name": "SSD 256GB Silicon Power 2.5\" SATAIII A55 3D Nand TLC",
+      "product_url": "https://shop.api.de/product/details/243569",
+      "thumbnail_url": "https://cnetcdn.continue.de/Lzc3L2RhLzc3ZGFmODdkLTZjODQtNDc1ZS1hNGI4LTM5ZDdkMmFhNDlmYy5qcGc=",
+      "description": "Boost your computer's performance with the 256GB Silicon Power SSD, designed for lightning-fast boot times and efficient application loading, making your everyday computing experience seamless."
+    },
+    {
+      "product_id": "16557",
+      "name": "SSD 128GB Silicon Power 2.5\" SATAIII A55 3D Nand TLC",
+      "product_url": "https://shop.api.de/product/details/243567",
+      "thumbnail_url": "https://cnetcdn.continue.de/L2Y2L2UwL2Y2ZTBkNmFhLWUxZDAtNGE0Yi05YWZlLWJjNjRkNmYyMWZmNi5qcGc=",
+      "description": "Transform your slow computer into a speedy powerhouse with the 128GB Silicon Power SSD, offering a perfect balance of capacity and performance for users looking to enhance their system without breaking the bank."
+    },
+    {
+      "product_id": "18543",
+      "name": "SSD 512GB Silicon Power 2.5\" SATAIII A55 3D Nand TLC",
+      "product_url": "https://shop.api.de/product/details/252966",
+      "thumbnail_url": "https://cnetcdn.continue.de/Lzk2LzZkLzk2NmQ2YWNiLTJjYjAtNDczYy1iNjQ2LTMxM2RhMmZlY2QwMy5qcGc=",
+      "description": "Experience unparalleled speed and efficiency with the 512GB Silicon Power SSD, the ultimate upgrade for users who demand rapid boot times and swift access to applications, ensuring your system runs at its best."
+    }
+  ]
+}
+```
+2025-06-13 14:19:45,768 - mini_RAG - INFO - Original User Query: My computer takes forever to boot up and open programs
+2025-06-13 14:19:49,348 - httpx - INFO - HTTP Request: POST https://api.openai.com/v1/chat/completions "HTTP/1.1 200 OK"
+2025-06-13 14:19:49,350 - mini_RAG - INFO - Expanded Query Analysis: INTENT: The user is seeking information or solutions to improve their computer's boot-up time and program loading speed, likely looking for hardware upgrades, troubleshooting tips, or software recommendations.
+
+SLOTS: 
+- Product type/category: Computer hardware (e.g., SSD, RAM, etc.), software (e.g., optimization tools)
+- Specifications: Faster boot times, improved program loading, potential memory upgrades
+- Brand preferences: Not specified
+- Price indicators: Not specified
+- Usage requirements: General computing, possibly gaming or productivity
+- Any other constraints: May require compatibility with existing hardware
+
+QUERIES:
+1. "What are the best SSDs to speed up boot times for my computer?"
+2. "How can I improve my computer's performance to reduce program loading times?"
+3. "Which RAM upgrades are recommended for faster boot and application speed on a desktop?"
+4. "Are there software tools available to optimize boot time and enhance program opening speed on Windows?"
+5. "What hardware upgrades can I make to decrease my laptop's startup time and improve performance for gaming?"
+2025-06-13 14:19:49,350 - mini_RAG - INFO - Using expanded query: "What are the best SSDs to speed up boot times for my computer?"
+2025-06-13 14:19:49,350 - mini_RAG - INFO - Using search pipeline: Fusion Search (RRF)
+2025-06-13 14:19:49,350 - mini_RAG - INFO - Connecting to Qdrant at http://localhost:6333...
+2025-06-13 14:19:50,146 - httpx - INFO - HTTP Request: GET http://localhost:6333 "HTTP/1.1 200 OK"
+2025-06-13 14:19:50,146 - mini_RAG - INFO - Initializing OpenAI embeddings (text-embedding-3-large)...
+2025-06-13 14:19:50,168 - mini_RAG - INFO - Loading cross-encoder model svalabs/cross-electra-ms-marco-german-uncased...
+2025-06-13 14:19:52,396 - mini_RAG - INFO - PERFORMANCE: Initialization for 'models_and_client' took 3045.92ms
+2025-06-13 14:19:52,396 - mini_RAG - INFO - Successfully initialized Qdrant client and models.
+2025-06-13 14:19:52,941 - httpx - INFO - HTTP Request: POST https://api.openai.com/v1/embeddings "HTTP/1.1 200 OK"
+2025-06-13 14:19:53,185 - mini_RAG - INFO - PERFORMANCE: Query encoding for '"What are the best SSDs to speed up boot times for my computer?"' took 789.65ms
+2025-06-13 14:19:55,182 - httpx - INFO - HTTP Request: POST http://localhost:6333/collections/shop_api_openai_embeddings_collection/points/query "HTTP/1.1 200 OK"
+2025-06-13 14:19:55,875 - mini_RAG - INFO - PERFORMANCE: Search and rerank for '"What are the best SSDs to speed up boot times for my computer?"' took 6525.60ms, details: search: 2418.5ms, rerank: 271.2ms, hits: 30, reranked: 10
+2025-06-13 14:20:04,002 - httpx - INFO - HTTP Request: POST https://api.openai.com/v1/chat/completions "HTTP/1.1 200 OK"
+2025-06-13 14:20:04,009 - mini_RAG - INFO - Final Query Used: "What are the best SSDs to speed up boot times for my computer?"
+2025-06-13 14:20:04,009 - mini_RAG - INFO - Answer: {
+  "response_type": "PRODUCT_LIST",
+  "message_text": "Here are some excellent SSD options to speed up your computer's boot times! Please choose from the following options:",
+  "products": [
+    {
+      "product_id": "54987",
+      "name": "Intenso 6.3cm (2,5\") 2TB SSD SATA 3 Top Performance",
+      "product_url": "https://shop.api.de/product/details/409602",
+      "thumbnail_url": "https://cnetcdn.continue.de/Lzk4L2VhLzk4ZWE4YTkyLTZmZDktNDk3ZS1hNWU1LWMxZDQyNzE3YzNmZS5qcGc=",
+      "description": "Upgrade your computer or notebook effortlessly with the Intenso SSD, achieving boot times of under 20 seconds thanks to its lightning-fast SATA III interface."
+    },
+    {
+      "product_id": "18544",
+      "name": "SSD 1TB Silicon Power 2.5\" SATAIII A55 3D Nand TLC",
+      "product_url": "https://shop.api.de/product/details/252968",
+      "thumbnail_url": "https://cnetcdn.continue.de/L2E0L2VhL2E0ZWFkNzM3LTIwNzQtNGIwYS05YzZjLTZmYTg4ZDQzZmViYi5qcGc=",
+      "description": "Transform your sluggish boot-up times with the 1TB Silicon Power SSD, ideal for budget-conscious users seeking a powerful speed boost at an affordable price."
+    },
+    {
+      "product_id": "16558",
+      "name": "SSD 256GB Silicon Power 2.5\" SATAIII A55 3D Nand TLC",
+      "product_url": "https://shop.api.de/product/details/243569",
+      "thumbnail_url": "https://cnetcdn.continue.de/Lzc3L2RhLzc3ZGFmODdkLTZjODQtNDc1ZS1hNGI4LTM5ZDdkMmFhNDlmYy5qcGc=",
+      "description": "Revitalize your computer with the 256GB Silicon Power SSD, offering an easy and cost-effective way to enhance your system’s performance and reduce loading times."
+    }
+  ]
+}
+2025-06-13 14:23:03,541 - mini_RAG - INFO - Original User Query: My computer takes forever to boot up and open programs
+2025-06-13 14:23:06,569 - httpx - INFO - HTTP Request: POST https://api.openai.com/v1/chat/completions "HTTP/1.1 200 OK"
+2025-06-13 14:23:06,570 - mini_RAG - INFO - Expanded Query Analysis: INTENT: The user is seeking information or solutions to improve their computer's performance, specifically regarding slow boot-up times and program loading.
+
+SLOTS: 
+- Product type/category: Computer, possibly a laptop or desktop
+- Specifications: Performance enhancement (possibly related to RAM, SSD vs HDD, processor speed)
+- Brand preferences: Not explicitly stated
+- Price indicators: Not explicitly stated
+- Usage requirements: Faster boot-up and application launch
+- Any other constraints: None specified
+
+QUERIES:
+1. "Best upgrades for a slow booting computer to improve performance"
+2. "How to speed up my desktop computer's boot time and program loading"
+3. "Recommendations for hardware upgrades to enhance the performance of my laptop"
+4. "Top-rated SSDs to reduce boot time for my slow computer"
+5. "Effective ways to optimize my computer's startup speed and application opening times"
+2025-06-13 14:23:06,570 - mini_RAG - INFO - Using expanded query: "Best upgrades for a slow booting computer to improve performance"
+2025-06-13 14:23:06,570 - mini_RAG - INFO - Using search pipeline: Fusion Search (RRF)
+2025-06-13 14:23:06,570 - mini_RAG - INFO - Connecting to Qdrant at http://localhost:6333...
+2025-06-13 14:23:07,382 - httpx - INFO - HTTP Request: GET http://localhost:6333 "HTTP/1.1 200 OK"
+2025-06-13 14:23:07,382 - mini_RAG - INFO - Initializing OpenAI embeddings (text-embedding-3-large)...
+2025-06-13 14:23:07,405 - mini_RAG - INFO - Loading cross-encoder model svalabs/cross-electra-ms-marco-german-uncased...
+2025-06-13 14:23:09,649 - mini_RAG - INFO - PERFORMANCE: Initialization for 'models_and_client' took 3078.35ms
+2025-06-13 14:23:09,649 - mini_RAG - INFO - Successfully initialized Qdrant client and models.
+2025-06-13 14:23:10,419 - httpx - INFO - HTTP Request: POST https://api.openai.com/v1/embeddings "HTTP/1.1 200 OK"
+2025-06-13 14:23:10,668 - mini_RAG - INFO - PERFORMANCE: Query encoding for '"Best upgrades for a slow booting computer to improve performance"' took 1018.88ms
+2025-06-13 14:23:12,536 - httpx - INFO - HTTP Request: POST http://localhost:6333/collections/shop_api_openai_embeddings_collection/points/query "HTTP/1.1 200 OK"
+2025-06-13 14:23:13,007 - mini_RAG - INFO - PERFORMANCE: Search and rerank for '"Best upgrades for a slow booting computer to improve performance"' took 6436.82ms, details: search: 2065.9ms, rerank: 273.4ms, hits: 30, reranked: 10
+2025-06-13 14:23:21,231 - httpx - INFO - HTTP Request: POST https://api.openai.com/v1/chat/completions "HTTP/1.1 200 OK"
+2025-06-13 14:23:21,232 - mini_RAG - INFO - Final Query Used: "Best upgrades for a slow booting computer to improve performance"
+2025-06-13 14:23:21,232 - mini_RAG - INFO - Answer: {
+  "response_type": "PRODUCT_LIST",
+  "message_text": "Looking to upgrade your slow booting computer? Check out these fantastic SSD options that can boost your performance and speed up your system. Choose from the following:",
+  "products": [
+    {
+      "product_id": "16558",
+      "name": "SSD 256GB Silicon Power 2.5\" SATAIII A55 3D Nand TLC",
+      "product_url": "https://shop.api.de/product/details/243569",
+      "thumbnail_url": "https://cnetcdn.continue.de/Lzc3L2RhLzc3ZGFmODdkLTZjODQtNDc1ZS1hNGI4LTM5ZDdkMmFhNDlmYy5qcGc=",
+      "description": "Transform your computer's performance with the Silicon Power 256GB SSD, offering lightning-fast boot times and application loading speeds, making your everyday tasks smoother than ever!"
+    },
+    {
+      "product_id": "16557",
+      "name": "SSD 128GB Silicon Power 2.5\" SATAIII A55 3D Nand TLC",
+      "product_url": "https://shop.api.de/product/details/243567",
+      "thumbnail_url": "https://cnetcdn.continue.de/L2Y2L2UwL2Y2ZTBkNmFhLWUxZDAtNGE0Yi05YWZlLWJjNjRkNmYyMWZmNi5qcGc=",
+      "description": "Upgrade your system effortlessly with the Silicon Power 128GB SSD, designed to deliver remarkable speed improvements, ensuring your computer boots up in a flash!"
+    },
+    {
+      "product_id": "18544",
+      "name": "SSD 1TB Silicon Power 2.5\" SATAIII A55 3D Nand TLC",
+      "product_url": "https://shop.api.de/product/details/252968",
+      "thumbnail_url": "https://cnetcdn.continue.de/L2E0L2VhL2E0ZWFkNzM3LTIwNzQtNGIwYS05YzZjLTZmYTg4ZDQzZmViYi5qcGc=",
+      "description": "Experience unparalleled performance with the Silicon Power 1TB SSD, perfect for users seeking extensive storage and incredible speeds, making your computer feel brand new!"
+    }
+  ]
+}
+2025-06-13 14:24:16,306 - mini_RAG - INFO - Original User Query: Portable Powerbank that will power my electonic gadgets throughout my weekend trip
+2025-06-13 14:24:20,055 - httpx - INFO - HTTP Request: POST https://api.openai.com/v1/chat/completions "HTTP/1.1 200 OK"
+2025-06-13 14:24:20,056 - mini_RAG - INFO - Expanded Query Analysis: INTENT: The user is looking for a portable power bank that can charge their electronic devices effectively during a weekend trip.
+
+SLOTS: 
+- Product type/category: Portable Power Bank
+- Specifications: Capacity (mAh), number of ports, charging speed (W), weight, size
+- Brand preferences: Not specified (could include popular brands like Anker, RAVPower, etc.)
+- Price indicators: Not specified (but could imply mid-range to high-end based on usage)
+- Usage requirements: Must provide enough power for multiple electronic gadgets over a weekend
+- Any other constraints: Portability, durability for travel, possibly waterproof
+
+QUERIES:
+1. "Best portable power banks for charging multiple electronic devices during a weekend trip"
+2. "High-capacity portable power bank options for weekend travel with electronic gadgets"
+3. "Top-rated portable power banks that can power gadgets throughout a weekend getaway"
+4. "Durable and lightweight power banks for charging electronics while on a weekend trip"
+5. "Portable power banks with high mAh capacity for reliable charging of electronic devices during a weekend excursion"
+2025-06-13 14:24:20,056 - mini_RAG - INFO - Using expanded query: "Best portable power banks for charging multiple electronic devices during a weekend trip"
+2025-06-13 14:24:20,056 - mini_RAG - INFO - Using search pipeline: Fusion Search (RRF)
+2025-06-13 14:24:20,809 - httpx - INFO - HTTP Request: POST https://api.openai.com/v1/embeddings "HTTP/1.1 200 OK"
+2025-06-13 14:24:21,118 - mini_RAG - INFO - PERFORMANCE: Query encoding for '"Best portable power banks for charging multiple electronic devices during a weekend trip"' took 1062.56ms
+2025-06-13 14:24:22,659 - httpx - INFO - HTTP Request: POST http://localhost:6333/collections/shop_api_openai_embeddings_collection/points/query "HTTP/1.1 200 OK"
+2025-06-13 14:24:23,141 - mini_RAG - INFO - PERFORMANCE: Search and rerank for '"Best portable power banks for charging multiple electronic devices during a weekend trip"' took 3085.03ms, details: search: 1839.2ms, rerank: 183.1ms, hits: 30, reranked: 10
+2025-06-13 14:24:32,383 - httpx - INFO - HTTP Request: POST https://api.openai.com/v1/chat/completions "HTTP/1.1 200 OK"
+2025-06-13 14:24:32,384 - mini_RAG - INFO - Final Query Used: "Best portable power banks for charging multiple electronic devices during a weekend trip"
+2025-06-13 14:24:32,384 - mini_RAG - INFO - Answer: {
+  "response_type": "PRODUCT_LIST",
+  "message_text": "Here are some of the best portable power banks perfect for charging multiple electronic devices during your weekend trip. Please choose from the options below:",
+  "products": [
+    {
+      "product_id": "56939",
+      "name": "RealPower Powerbank PB-56000 Pro 56000 mAh 100Watt Type-C PD",
+      "product_url": "https://shop.api.de/product/details/414907",
+      "thumbnail_url": "https://mediacdn.continue.de/L2ZpbGUucGhwLzFRSThoZS1Idm81MDYtVFQwMDAwLXhocnlweS80MTQ5MDdfMC5qcGc=",
+      "description": "With an astounding 56,000 mAh capacity and 100W output, the RealPower PB-56000 Pro can charge up to four devices simultaneously, ensuring your weekend getaway stays powered without compromise."
+    },
+    {
+      "product_id": "5350",
+      "name": "TERRATEC Powerbank HotPot 1200 1.200mAh",
+      "product_url": "https://shop.api.de/product/details/163649",
+      "thumbnail_url": "https://cnetcdn.continue.de/L2M0L2ZjL2M0ZmNlN2QyLTc2YjQtNGM1Ny1iMWM1LTQ0ZTk4MjMyNzUzNC5qcGc=",
+      "description": "The innovative TERRATEC HotPot not only serves as a power bank but also generates energy from the heat of your beverages, making it an essential companion for camping adventures."
+    },
+    {
+      "product_id": "30371",
+      "name": "RealPower Powerbank PB-10000 PD+ Nutopia 10.000mAh",
+      "product_url": "https://shop.api.de/product/details/323370",
+      "thumbnail_url": "https://mediacdn.continue.de/L2ZpbGUucGhwLzFUWmg1NC15ZFNMblktb1EwMDAwLXN2cG9tei8zMjMzNzB4bC0yLmpwZw==",
+      "description": "Compact yet powerful, the RealPower PB-10000 PD+ Nutopia offers 10,000 mAh of charging capacity, making it an ideal choice for quick recharges while on the move."
+    }
+  ]
+}
+2025-06-13 14:31:59,412 - mini_RAG - INFO - Original User Query: My computer takes forever to boot up and open programs.
+2025-06-13 14:32:03,954 - httpx - INFO - HTTP Request: POST https://api.openai.com/v1/chat/completions "HTTP/1.1 200 OK"
+2025-06-13 14:32:03,968 - mini_RAG - INFO - Expanded Query Analysis: INTENT: The user is seeking information on how to improve their computer's performance, specifically regarding boot times and program loading speeds. They may be looking for solutions such as hardware upgrades or software recommendations.
+
+SLOTS: Computer performance, boot speed, program loading speed, potential upgrades (e.g., SSD, RAM), troubleshooting tips, brand preferences, budget considerations.
+
+QUERIES:
+1. "What hardware upgrades can improve my computer's boot speed and program loading times?"
+2. "How can I speed up my computer's startup and application opening process with SSD or RAM upgrades?"
+3. "What are the best SSDs or RAM options to enhance boot time and program performance for my computer?"
+4. "Can you recommend software solutions or optimizations to reduce my computer's boot time and application launch delays?"
+5. "What troubleshooting steps can I take to fix slow boot up and program opening issues on my Windows computer?"
+2025-06-13 14:32:03,968 - mini_RAG - INFO - Using expanded query: "What hardware upgrades can improve my computer's boot speed and program loading times?"
+2025-06-13 14:32:03,968 - mini_RAG - INFO - Using search pipeline: Fusion Search (RRF)
+2025-06-13 14:32:04,907 - httpx - INFO - HTTP Request: POST https://api.openai.com/v1/embeddings "HTTP/1.1 200 OK"
+2025-06-13 14:32:05,115 - mini_RAG - INFO - PERFORMANCE: Query encoding for '"What hardware upgrades can improve my computer's boot speed and program loading times?"' took 1146.47ms
+2025-06-13 14:32:07,614 - httpx - INFO - HTTP Request: POST http://localhost:6333/collections/shop_api_openai_embeddings_collection/points/query "HTTP/1.1 200 OK"
+2025-06-13 14:32:08,021 - mini_RAG - INFO - PERFORMANCE: Search and rerank for '"What hardware upgrades can improve my computer's boot speed and program loading times?"' took 4052.47ms, details: search: 2746.2ms, rerank: 159.7ms, hits: 30, reranked: 10
+2025-06-13 14:32:16,234 - httpx - INFO - HTTP Request: POST https://api.openai.com/v1/chat/completions "HTTP/1.1 200 OK"
+2025-06-13 14:32:16,237 - mini_RAG - INFO - Final Query Used: "What hardware upgrades can improve my computer's boot speed and program loading times?"
+2025-06-13 14:32:16,238 - mini_RAG - INFO - Answer: {
+  "response_type": "PRODUCT_LIST",
+  "message_text": "To significantly improve your computer's boot speed and program loading times, I recommend considering these SSD upgrades. Choose from the options below to give your computer the performance boost it deserves!",
+  "products": [
+    {
+      "product_id": "18543",
+      "name": "SSD 512GB Silicon Power 2.5\" SATAIII A55 3D Nand TLC",
+      "product_url": "https://shop.api.de/product/details/252966",
+      "thumbnail_url": "https://cnetcdn.continue.de/Lzk2LzZkLzk2NmQ2YWNiLTJjYjAtNDczYy1iNjQ2LTMxM2RhMmZlY2QwMy5qcGc=",
+      "description": "Elevate your computing experience with the 512GB Silicon Power SSD, designed for blazing-fast boot times and application launches, making your old computer feel like new!"
+    },
+    {
+      "product_id": "16557",
+      "name": "SSD 128GB Silicon Power 2.5\" SATAIII A55 3D Nand TLC",
+      "product_url": "https://shop.api.de/product/details/243567",
+      "thumbnail_url": "https://cnetcdn.continue.de/L2Y2L2UwL2Y2ZTBkNmFhLWUxZDAtNGE0Yi05YWZlLWJjNjRkNmYyMWZmNi5qcGc=",
+      "description": "Transform your system's responsiveness with the 128GB Silicon Power SSD, perfect for quick system boots and speedy application access without breaking the bank!"
+    },
+    {
+      "product_id": "16558",
+      "name": "SSD 256GB Silicon Power 2.5\" SATAIII A55 3D Nand TLC",
+      "product_url": "https://shop.api.de/product/details/243569",
+      "thumbnail_url": "https://cnetcdn.continue.de/Lzc3L2RhLzc3ZGFmODdkLTZjODQtNDc1ZS1hNGI4LTM5ZDdkMmFhNDlmYy5qcGc=",
+      "description": "Achieve the perfect balance of speed and storage with the 256GB Silicon Power SSD, enhancing your computer's performance and ensuring faster load times for all your essential programs!"
+    }
+  ]
+}
+2025-06-13 14:59:59,726 - mini_RAG - INFO - Original User Query: My computer takes forever to boot up and open programs.
+2025-06-13 15:00:04,820 - httpx - INFO - HTTP Request: POST https://api.openai.com/v1/chat/completions "HTTP/1.1 200 OK"
+2025-06-13 15:00:04,844 - mini_RAG - INFO - PERFORMANCE: OpenAI Query Expansion for '
+You are an expert at query understanding and expansion for e-commerce...' took 5117.76ms, details: Model: gpt-4o-mini
+2025-06-13 15:00:04,844 - mini_RAG - INFO - Expanded Query Analysis: INTENT: The user is seeking solutions or products to improve the performance of their computer, specifically to reduce boot-up times and the time it takes to open programs.
+
+SLOTS: 
+- Product type/category: Computer hardware or software upgrades
+- Specifications: Fast SSD, RAM (memory) upgrade, processor (CPU) upgrade
+- Brand preferences: None specified
+- Price indicators: None specified
+- Usage requirements: Improve boot time, increase program opening speed
+- Any other constraints: None specified
+
+QUERIES:
+1. "What are the best SSD upgrades to reduce boot time for my computer?"
+2. "How can I speed up my computer's startup and program loading times with RAM upgrades?"
+3. "Which computer hardware upgrades can enhance performance for faster booting and application launching?"
+4. "Recommendations for software solutions to optimize my computer's boot speed and program access times?"
+5. "How can I improve my computer's performance with a new SSD or RAM for faster startup and program opening?"
+2025-06-13 15:00:04,844 - mini_RAG - INFO - Using expanded query: "What are the best SSD upgrades to reduce boot time for my computer?"
+2025-06-13 15:00:04,844 - mini_RAG - INFO - Using search pipeline: Fusion Search (RRF)
+2025-06-13 15:00:04,844 - mini_RAG - INFO - Connecting to Qdrant at http://localhost:6333...
+2025-06-13 15:00:05,560 - httpx - INFO - HTTP Request: GET http://localhost:6333 "HTTP/1.1 200 OK"
+2025-06-13 15:00:05,560 - mini_RAG - INFO - Initializing OpenAI embeddings (text-embedding-3-large)...
+2025-06-13 15:00:05,584 - mini_RAG - INFO - Loading cross-encoder model svalabs/cross-electra-ms-marco-german-uncased...
+2025-06-13 15:00:08,059 - mini_RAG - INFO - PERFORMANCE: Initialization for 'models_and_client' took 3214.60ms
+2025-06-13 15:00:08,059 - mini_RAG - INFO - Successfully initialized Qdrant client and models.
+2025-06-13 15:00:09,153 - httpx - INFO - HTTP Request: POST https://api.openai.com/v1/embeddings "HTTP/1.1 200 OK"
+2025-06-13 15:00:09,155 - mini_RAG - INFO - PERFORMANCE: Query encoding for '"What are the best SSD upgrades to reduce boot time for my computer?"' took 1096.35ms
+2025-06-13 15:00:11,599 - httpx - INFO - HTTP Request: POST http://localhost:6333/collections/shop_api_openai_embeddings_collection/points/query "HTTP/1.1 200 OK"
+2025-06-13 15:00:12,071 - mini_RAG - INFO - PERFORMANCE: Search and rerank for '"What are the best SSD upgrades to reduce boot time for my computer?"' took 7226.84ms, details: search: 2643.5ms, rerank: 272.1ms, hits: 30, reranked: 10
+2025-06-13 15:00:21,226 - httpx - INFO - HTTP Request: POST https://api.openai.com/v1/chat/completions "HTTP/1.1 200 OK"
+2025-06-13 15:00:21,227 - mini_RAG - INFO - PERFORMANCE: OpenAI Product JSON Generation for '### INSTRUCTION ###
+You are a JSON generation bot. Your task is to pop...' took 9156.05ms, details: Model: gpt-4o-mini
+2025-06-13 15:00:21,227 - mini_RAG - INFO - Final Query Used: "What are the best SSD upgrades to reduce boot time for my computer?"
+2025-06-13 15:00:21,227 - mini_RAG - INFO - Answer: {
+  "response_type": "PRODUCT_LIST",
+  "message_text": "To significantly reduce boot times for your computer, consider these top SSD upgrades. Each option offers exceptional speed and reliability. Please choose from the following options:",
+  "products": [
+    {
+      "product_id": "18543",
+      "name": "SSD 512GB Silicon Power 2.5\" SATAIII A55 3D Nand TLC",
+      "product_url": "https://shop.api.de/product/details/252966",
+      "thumbnail_url": "https://cnetcdn.continue.de/Lzk2LzZkLzk2NmQ2YWNiLTJjYjAtNDczYy1iNjQ2LTMxM2RhMmZlY2QwMy5qcGc=",
+      "description": "Transform your computer's performance with the 512GB Silicon Power A55 SSD, delivering lightning-fast boot times and application loading at an unbeatable price."
+    },
+    {
+      "product_id": "18544",
+      "name": "SSD 1TB Silicon Power 2.5\" SATAIII A55 3D Nand TLC",
+      "product_url": "https://shop.api.de/product/details/252968",
+      "thumbnail_url": "https://cnetcdn.continue.de/L2E0L2VhL2E0ZWFkNzM3LTIwNzQtNGIwYS05YzZjLTZmYTg4ZDQzZmViYi5qcGc=",
+      "description": "Experience superior storage capacity and speed with the 1TB Silicon Power A55 SSD, designed to elevate your computing experience and reduce waiting times."
+    },
+    {
+      "product_id": "107346",
+      "name": "SSD 4TB Silicon Power 2.5\" SATAIII A55 3D Nand TLC BULK",
+      "product_url": "https://shop.api.de/product/details/517581",
+      "thumbnail_url": "https://cnetcdn.continue.de/L2NmLzA0L2NmMDRhZWYwLTU3OGMtNGE1ZS05NDVhLTQ1NjhhZmI4NGYwOC5qcGc=",
+      "description": "Unlock unprecedented performance and storage potential with the 4TB Silicon Power A55 SSD, ensuring your system runs smoothly and efficiently, even with massive workloads."
+    }
+  ]
+}
+2025-06-13 15:03:41,178 - mini_RAG - INFO - Original User Query: My computer takes forever to boot up and open programs.
+2025-06-13 15:03:43,513 - httpx - INFO - HTTP Request: POST https://api.openai.com/v1/chat/completions "HTTP/1.1 200 OK"
+2025-06-13 15:03:43,514 - mini_RAG - INFO - PERFORMANCE: OpenAI Query Expansion for '
+You are an expert at query understanding and expansion for e-commerce...' took 2335.45ms, details: Model: gpt-4o-mini
+2025-06-13 15:03:43,514 - mini_RAG - INFO - Expanded Query Analysis: INTENT: The user is seeking information on how to improve their computer's performance, specifically regarding slow boot times and program loading. They may be looking for solutions, upgrades, or products that can enhance their computer's speed.
+
+SLOTS: 
+- Product type/category: Computer hardware (e.g., SSDs, RAM, software)
+- Specifications: Fast boot times, improved program loading speed
+- Brand preferences: None specified
+- Price indicators: None specified
+- Usage requirements: High performance for daily tasks and applications
+- Any other constraints: None specified
+
+QUERIES:
+1. "What upgrades can I make to my computer to reduce boot time and speed up application loading?"
+2. "Looking for hardware solutions to improve my computer's boot speed and program launch times."
+3. "Which SSDs provide the best performance for faster booting and opening programs on my computer?"
+4. "How can I enhance my computer's performance to decrease boot times and increase application speed?"
+5. "Best RAM and SSD options for significantly improving boot time and program startup on a desktop or laptop computer?"
+2025-06-13 15:03:43,514 - mini_RAG - INFO - Using expanded query: "What upgrades can I make to my computer to reduce boot time and speed up application loading?"
+2025-06-13 15:03:43,514 - mini_RAG - INFO - Using search pipeline: Fusion Search (RRF)
+2025-06-13 15:03:44,802 - httpx - INFO - HTTP Request: POST https://api.openai.com/v1/embeddings "HTTP/1.1 200 OK"
+2025-06-13 15:03:45,109 - mini_RAG - INFO - PERFORMANCE: Query encoding for '"What upgrades can I make to my computer to reduce boot time and speed up application loading?"' took 1595.33ms
+2025-06-13 15:03:47,250 - httpx - INFO - HTTP Request: POST http://localhost:6333/collections/shop_api_openai_embeddings_collection/points/query "HTTP/1.1 200 OK"
+2025-06-13 15:03:47,421 - mini_RAG - INFO - PERFORMANCE: Search and rerank for '"What upgrades can I make to my computer to reduce boot time and speed up application loading?"' took 3906.80ms, details: search: 2141.5ms, rerank: 169.8ms, hits: 30, reranked: 10
+2025-06-13 15:04:00,565 - httpx - INFO - HTTP Request: POST https://api.openai.com/v1/chat/completions "HTTP/1.1 200 OK"
+2025-06-13 15:04:00,566 - mini_RAG - INFO - PERFORMANCE: OpenAI Product JSON Generation for '### INSTRUCTION ###
+You are a JSON generation bot. Your task is to pop...' took 13144.91ms, details: Model: gpt-4o-mini
+2025-06-13 15:04:00,566 - mini_RAG - INFO - Final Query Used: "What upgrades can I make to my computer to reduce boot time and speed up application loading?"
+2025-06-13 15:04:00,566 - mini_RAG - INFO - Answer: {
+  "response_type": "PRODUCT_LIST",
+  "message_text": "To enhance your computer's boot time and application loading speed, I recommend considering one of the following SSD upgrades. Each option provides a fantastic performance boost, making your computing experience smoother and faster. Please choose from the options below:",
+  "products": [
+    {
+      "product_id": "16558",
+      "name": "SSD 256GB Silicon Power 2.5\" SATAIII A55 3D Nand TLC",
+      "product_url": "https://shop.api.de/product/details/243569",
+      "thumbnail_url": "https://cnetcdn.continue.de/Lzc3L2RhLzc3ZGFmODdkLTZjODQtNDc1ZS1hNGI4LTM5ZDdkMmFhNDlmYy5qcGc=",
+      "description": "Upgrade to the 256GB Silicon Power SSD for a remarkable speed boost, ensuring your computer boots in seconds and applications launch instantly!"
+    },
+    {
+      "product_id": "16557",
+      "name": "SSD 128GB Silicon Power 2.5\" SATAIII A55 3D Nand TLC",
+      "product_url": "https://shop.api.de/product/details/243567",
+      "thumbnail_url": "https://cnetcdn.continue.de/L2Y2L2UwL2Y2ZTBkNmFhLWUxZDAtNGE0Yi05YWZlLWJjNjRkNmYyMWZmNi5qcGc=",
+      "description": "The 128GB Silicon Power SSD is a budget-friendly choice that delivers impressive performance, transforming your sluggish system into a high-speed machine!"
+    },
+    {
+      "product_id": "18543",
+      "name": "SSD 512GB Silicon Power 2.5\" SATAIII A55 3D Nand TLC",
+      "product_url": "https://shop.api.de/product/details/252966",
+      "thumbnail_url": "https://cnetcdn.continue.de/Lzk2LzZkLzk2NmQ2YWNiLTJjYjAtNDczYy1iNjQ2LTMxM2RhMmZlY2QwMy5qcGc=",
+      "description": "Experience the ultimate performance with the 512GB Silicon Power SSD, perfect for users who demand speed and efficiency, ensuring your system is always ready to go!"
+    }
+  ]
+}
+2025-06-13 15:05:13,990 - mini_RAG - INFO - Original User Query: My computer takes forever to boot up and open programs.
+2025-06-13 15:05:21,568 - httpx - INFO - HTTP Request: POST https://api.openai.com/v1/chat/completions "HTTP/1.1 200 OK"
+2025-06-13 15:05:21,570 - mini_RAG - INFO - PERFORMANCE: OpenAI Query Expansion for '
+You are an expert at query understanding and expansion for e-commerce...' took 7579.12ms, details: Model: gpt-4o-mini
+2025-06-13 15:05:21,570 - mini_RAG - INFO - Expanded Query Analysis: INTENT: The user is seeking information or solutions to improve the performance of their computer, particularly regarding boot-up speed and program loading times. They may be looking for products, tips, or upgrades that can enhance their computer's performance.
+
+SLOTS: 
+- Product type/category: Computer, possibly components (e.g., SSD, RAM)
+- Specifications: Speed (boot-up time, program loading time), potentially memory (RAM), storage type (SSD vs HDD)
+- Brand preferences: Not specified
+- Price indicators: Not specified
+- Usage requirements: Fast boot and program loading
+- Any other constraints: None specified
+
+QUERIES:
+1. "What upgrades can I make to my computer to reduce boot-up time and improve program loading speed?"
+2. "Best SSDs for faster boot times and program launches for my computer?"
+3. "How can I optimize my computer's performance to boot up quickly and run programs faster?"
+4. "Recommendations for increasing my computer's speed with hardware upgrades to improve boot-up and application loading?"
+5. "How to speed up my computer's start-up process and program execution times with specific components like SSDs or more RAM?"
+2025-06-13 15:05:21,570 - mini_RAG - INFO - Using expanded query: "What upgrades can I make to my computer to reduce boot-up time and improve program loading speed?"
+2025-06-13 15:05:21,570 - mini_RAG - INFO - Using search pipeline: Fusion Search (RRF)
+2025-06-13 15:05:21,570 - mini_RAG - INFO - Connecting to Qdrant at http://localhost:6333...
+2025-06-13 15:05:22,288 - httpx - INFO - HTTP Request: GET http://localhost:6333 "HTTP/1.1 200 OK"
+2025-06-13 15:05:22,289 - mini_RAG - INFO - Initializing OpenAI embeddings (text-embedding-3-large)...
+2025-06-13 15:05:22,310 - mini_RAG - INFO - Loading cross-encoder model svalabs/cross-electra-ms-marco-german-uncased...
+2025-06-13 15:05:25,659 - mini_RAG - INFO - PERFORMANCE: Initialization for 'models_and_client' took 4089.30ms
+2025-06-13 15:05:25,659 - mini_RAG - INFO - Successfully initialized Qdrant client and models.
+2025-06-13 15:05:26,586 - httpx - INFO - HTTP Request: POST https://api.openai.com/v1/embeddings "HTTP/1.1 200 OK"
+2025-06-13 15:05:26,763 - mini_RAG - INFO - PERFORMANCE: Query encoding for '"What upgrades can I make to my computer to reduce boot-up time and improve program loading speed?"' took 1103.61ms
+2025-06-13 15:05:28,738 - httpx - INFO - HTTP Request: POST http://localhost:6333/collections/shop_api_openai_embeddings_collection/points/query "HTTP/1.1 200 OK"
+2025-06-13 15:05:28,998 - mini_RAG - INFO - PERFORMANCE: Search and rerank for '"What upgrades can I make to my computer to reduce boot-up time and improve program loading speed?"' took 7427.62ms, details: search: 1977.3ms, rerank: 257.1ms, hits: 30, reranked: 10
+2025-06-13 15:05:42,675 - httpx - INFO - HTTP Request: POST https://api.openai.com/v1/chat/completions "HTTP/1.1 200 OK"
+2025-06-13 15:05:42,676 - mini_RAG - INFO - PERFORMANCE: OpenAI Product JSON Generation for '### INSTRUCTION ###
+You are a JSON generation bot. Your task is to pop...' took 13677.90ms, details: Model: gpt-4o-mini
+2025-06-13 15:05:42,676 - mini_RAG - INFO - Final Query Used: "What upgrades can I make to my computer to reduce boot-up time and improve program loading speed?"
+2025-06-13 15:05:42,676 - mini_RAG - INFO - Answer: {
+  "response_type": "PRODUCT_LIST",
+  "message_text": "To enhance your computer's boot-up time and program loading speed, consider these SSD upgrades that offer exceptional performance and reliability. Please choose from the options below:",
+  "products": [
+    {
+      "product_id": "107346",
+      "name": "SSD 4TB Silicon Power 2.5\" SATAIII A55 3D Nand TLC BULK",
+      "product_url": "https://shop.api.de/product/details/517581",
+      "thumbnail_url": "https://cnetcdn.continue.de/L2NmLzA0L2NmMDRhZWYwLTU3OGMtNGE1ZS05NDVhLTQ1NjhhZmI4NGYwOC5qcGc=",
+      "description": "Transform your computing experience with the massive 4TB capacity of this SSD, providing lightning-fast boot-up times and blazing load speeds that allow you to tackle any task effortlessly."
+    },
+    {
+      "product_id": "16557",
+      "name": "SSD 128GB Silicon Power 2.5\" SATAIII A55 3D Nand TLC",
+      "product_url": "https://shop.api.de/product/details/243567",
+      "thumbnail_url": "https://cnetcdn.continue.de/L2Y2L2UwL2Y2ZTBkNmFhLWUxZDAtNGE0Yi05YWZlLWJjNjRkNmYyMWZmNi5qcGc=",
+      "description": "Experience a remarkable speed boost with this compact 128GB SSD, designed to dramatically reduce boot times and enhance application launching, all while being budget-friendly."
+    },
+    {
+      "product_id": "16558",
+      "name": "SSD 256GB Silicon Power 2.5\" SATAIII A55 3D Nand TLC",
+      "product_url": "https://shop.api.de/product/details/243569",
+      "thumbnail_url": "https://cnetcdn.continue.de/Lzc3L2RhLzc3ZGFmODdkLTZjODQtNDc1ZS1hNGI4LTM5ZDdkMmFhNDlmYy5qcGc=",
+      "description": "Boost your system's performance with this 256GB SSD, striking the perfect balance between capacity and speed, ensuring faster boot-ups and application loads for a smoother computing experience."
+    }
+  ]
+}
+2025-06-13 15:05:42,676 - mini_RAG - INFO - PERFORMANCE SUMMARY for 'My computer takes forever to boot up and open programs.': 
+  Total process time: 28685.28ms
+  Query Expansion: 7579.20ms
+  Search & Rerank: 7427.81ms
+  Product JSON Generation: 13677.98ms
+2025-06-13 15:10:38,810 - mini_RAG - INFO - Original User Query: My computer takes forever to boot up and open programs.
+2025-06-13 15:10:43,816 - httpx - INFO - HTTP Request: POST https://api.openai.com/v1/chat/completions "HTTP/1.1 200 OK"
+2025-06-13 15:10:43,816 - mini_RAG - INFO - PERFORMANCE: OpenAI Query Expansion for '
+You are an expert at query understanding and expansion for e-commerce...' took 5006.32ms, details: Model: gpt-4o-mini
+2025-06-13 15:10:43,816 - mini_RAG - INFO - Expanded Query Analysis: INTENT: The user is seeking information or solutions to improve their computer's performance, specifically related to slow boot-up times and program loading. They may be looking for hardware upgrades, software solutions, or troubleshooting tips.
+
+SLOTS: 
+- Product type/category: Computer (likely a desktop or laptop)
+- Specifications: Speed enhancement (SSD vs HDD), RAM, potential upgrades
+- Brand preferences: Not specified
+- Price indicators: Not specified
+- Usage requirements: Faster boot-up and program opening
+- Any other constraints: None explicitly stated
+
+QUERIES:
+1. "What are the best SSD upgrades for improving boot times and program loading on my desktop or laptop computer?"
+2. "How can I optimize my computer’s performance for faster startup and application launch times?"
+3. "Which RAM upgrades or SSD options can significantly reduce boot time for my computer?"
+4. "What software solutions or settings can help speed up the boot process and program launching on my PC?"
+5. "What are the recommended hardware upgrades, such as SSDs or RAM, to enhance boot-up speed and program loading times for my laptop?"
+2025-06-13 15:10:43,817 - mini_RAG - INFO - Using expanded query: "What are the best SSD upgrades for improving boot times and program loading on my desktop or laptop computer?"
+2025-06-13 15:10:43,817 - mini_RAG - INFO - Using search pipeline: Fusion Search (RRF)
+2025-06-13 15:10:44,634 - httpx - INFO - HTTP Request: POST https://api.openai.com/v1/embeddings "HTTP/1.1 200 OK"
+2025-06-13 15:10:44,862 - mini_RAG - INFO - PERFORMANCE: Query encoding for '"What are the best SSD upgrades for improving boot times and program loading on my desktop or laptop computer?"' took 1045.55ms
+2025-06-13 15:10:46,786 - httpx - INFO - HTTP Request: POST http://localhost:6333/collections/shop_api_openai_embeddings_collection/points/query "HTTP/1.1 200 OK"
+2025-06-13 15:10:47,186 - mini_RAG - INFO - PERFORMANCE: Search and rerank for '"What are the best SSD upgrades for improving boot times and program loading on my desktop or laptop computer?"' took 3369.23ms, details: search: 2131.1ms, rerank: 192.4ms, hits: 30, reranked: 10
+2025-06-13 15:10:56,311 - httpx - INFO - HTTP Request: POST https://api.openai.com/v1/chat/completions "HTTP/1.1 200 OK"
+2025-06-13 15:10:56,312 - mini_RAG - INFO - PERFORMANCE: OpenAI Product JSON Generation for '### INSTRUCTION ###
+You are a JSON generation bot. Your task is to pop...' took 9126.29ms, details: Model: gpt-4o-mini
+2025-06-13 15:10:56,312 - mini_RAG - INFO - Final Query Used: "What are the best SSD upgrades for improving boot times and program loading on my desktop or laptop computer?"
+2025-06-13 15:10:56,312 - mini_RAG - INFO - Answer: {
+  "response_type": "PRODUCT_LIST",
+  "message_text": "Here are some excellent SSD upgrades that will significantly enhance your computer's boot times and program loading speeds. Please choose from the following options:",
+  "products": [
+    {
+      "product_id": "18544",
+      "name": "SSD 1TB Silicon Power 2.5\" SATAIII A55 3D Nand TLC",
+      "product_url": "https://shop.api.de/product/details/252968",
+      "thumbnail_url": "https://cnetcdn.continue.de/L2E0L2VhL2E0ZWFkNzM3LTIwNzQtNGIwYS05YzZjLTZmYTg4ZDQzZmViYi5qcGc=",
+      "description": "Transform your computer with the SSD 1TB Silicon Power A55, boasting lightning-fast speeds of up to 600 MBps and a capacity that ensures you never run out of space for your essential applications."
+    },
+    {
+      "product_id": "18543",
+      "name": "SSD 512GB Silicon Power 2.5\" SATAIII A55 3D Nand TLC",
+      "product_url": "https://shop.api.de/product/details/252966",
+      "thumbnail_url": "https://cnetcdn.continue.de/Lzk2LzZkLzk2NmQ2YWNiLTJjYjAtNDczYy1iNjQ2LTMxM2RhMmZlY2QwMy5qcGc=",
+      "description": "Experience rapid boot times and swift application launches with the 512GB Silicon Power A55 SSD, designed for budget-conscious users who demand both performance and reliability."
+    },
+    {
+      "product_id": "107346",
+      "name": "SSD 4TB Silicon Power 2.5\" SATAIII A55 3D Nand TLC BULK",
+      "product_url": "https://shop.api.de/product/details/517581",
+      "thumbnail_url": "https://cnetcdn.continue.de/L2NmLzA0L2NmMDRhZWYwLTU3OGMtNGE1ZS05NDVhLTQ1NjhhZmI4NGYwOC5qcGc=",
+      "description": "Unlock unprecedented storage and speed with the massive 4TB Silicon Power A55 SSD, ensuring your system runs smoothly with minimal latency and breathtaking data transfer rates."
+    }
+  ]
+}
+2025-06-13 15:10:56,312 - mini_RAG - INFO - PERFORMANCE SUMMARY for 'My computer takes forever to boot up and open programs.': 
+  Total process time: 17502.41ms
+  Query Expansion: 5006.39ms
+  Search & Rerank: 3369.42ms
+  Product JSON Generation: 9126.37ms

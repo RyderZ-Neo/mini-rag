@@ -1,0 +1,12 @@
+fastapi
+uvicorn
+python-dotenv
+pydantic
+pydantic-settings
+httpx
+qdrant-client
+sentence-transformers
+fastembed
+openai
+langchain-openai
+torch
