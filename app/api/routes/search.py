@@ -7,7 +7,6 @@ from app.core.utils import convert_numpy_types
 
 router = APIRouter()
 
-
 @router.post("/search")  # Removed response_model constraint
 async def search(search_request: SearchRequest):
     """
