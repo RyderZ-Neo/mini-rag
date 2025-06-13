@@ -252,7 +252,8 @@ def search_and_rerank(query, limit=30, rerank_limit=10, pipeline=SearchPipeline.
                     continue
                 
                 retrieved_docs.append({
-                    'id': point_id,
+                    'point_id': point_id,
+                    'product_id': payload.get('product_id'),
                     'score': score,
                     'title': payload.get('title', 'No Title'),
                     'url': payload.get('url', 'No URL'),
@@ -359,6 +360,7 @@ You are a JSON generation bot. Your task is to populate the JSON object below us
 "message_text": "string",
 "products": [
     {{
+    "id": "string",  
     "product_id": "string",
     "name": "string",
     "product_url": "string",
@@ -413,26 +415,28 @@ async def process_search_query(query: str, limit: int = 30, rerank_limit: int = 
     
     # Use the returned reranked results instead of original ones for better context
     retrieved_docs = final_results[:3] if final_results else []
-    
+    logging.info(f"Retrieved {retrieved_docs[0]}  for context.")
     products_json = None
     json_gen_duration_ms = 0  # Initialize in case this step is skipped
     if retrieved_docs:
         # Create a structured format for the LLM to parse into JSON
         structured_docs = []
         for i, doc in enumerate(retrieved_docs):
-            doc_id = doc.get('id', f'product_{i+1}')
+            doc_id = doc.get('point_id', f'product_{i+1}')
+            product_id = doc.get('product_id')
             title = doc.get('title', 'No Title')
             url = doc.get('url', 'No URL')
             thumbnail = doc.get('thumbnail', doc.get('image', 'https://placeholder.com/150'))
             
             structured_entry = f"PRODUCT {i+1}:\n" \
                               f"ID: {doc_id}\n" \
+                              f"PRODUCT_ID: {product_id}\n" \
                               f"NAME: {title}\n" \
                               f"URL: {url}\n" \
                               f"THUMBNAIL: {thumbnail}\n" \
                               f"CONTENT: {doc.get('page_content', '')}...\n"
             structured_docs.append(structured_entry)
-        
+        logging.info(f"Structured Documents for LLM: {structured_docs[0]}")
         # Join the structured documents
         docs_content = "\n\n" + "\n\n".join(structured_docs)
         
