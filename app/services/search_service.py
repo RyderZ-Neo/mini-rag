@@ -15,6 +15,8 @@ from sentence_transformers import CrossEncoder
 
 from app.core.config import settings
 from app.core.models import SearchPipeline
+from app.core.prompts import REWRITE_PROMPT, PRODUCT_PROMPT # Import necessary prompts
+
 
 # Set up logging
 logging.basicConfig(
@@ -38,6 +40,34 @@ qdrant_client = None
 openai_embeddings = None
 cross_encoder = None
 
+def _extract_json_string_from_llm_output(llm_output: Optional[str]) -> Optional[str]:
+    """
+    Cleans the raw string output from an LLM, attempting to extract a valid JSON string.
+    Removes common Markdown fences (e.g., ```json ... ```) and trims whitespace.
+    """
+    if not llm_output:
+        return None
+    
+    cleaned_json = llm_output.strip()
+    
+    # Handle potential ```json prefix (and similar variations like ```)
+    if cleaned_json.startswith("```json"):
+        cleaned_json = cleaned_json[7:] # Length of "```json"
+    elif cleaned_json.startswith("```"):
+        cleaned_json = cleaned_json[3:] # Length of "```"
+    
+    # Strip again in case the prefix removal left whitespace or if there was no prefix
+    cleaned_json = cleaned_json.strip()
+    
+    # Handle potential ``` suffix
+    if cleaned_json.endswith("```"):
+        cleaned_json = cleaned_json[:-3] # Length of "```"
+        
+    # Final strip to clean up any remaining whitespace
+    cleaned_json = cleaned_json.strip()
+    
+    # Return the cleaned string; it might be empty if original was just fences/whitespace
+    return cleaned_json if cleaned_json else None
 
 def log_performance(operation, query, elapsed_time_ms, details=None):
     """Log performance metrics with timestamp"""
@@ -105,7 +135,7 @@ def initialize_models():
     return qdrant_client, openai_embeddings, cross_encoder, None
 
 
-def search_and_rerank(query, limit=30, rerank_limit=10, pipeline=SearchPipeline.FUSION_RRF):
+def search_and_rerank(query, limit=30, rerank_limit=10, pipeline=None):
     """Search Qdrant and rerank results using cross-encoder with selectable pipeline"""
     if not query:
         return [], [], "Error: Query is required."
@@ -308,74 +338,7 @@ def search_and_rerank(query, limit=30, rerank_limit=10, pipeline=SearchPipeline.
         status_message = f"Error searching for '{query}': {error_msg}"
         log_performance("Search error", query, elapsed_ms, error_msg)
         return [], [], status_message
-
-
-# Prompt templates
-REWRITE_PROMPT = """
-You are an expert at query understanding and expansion for e-commerce product search.
-
-First, analyze the user's query: "{question}"
-
-1. IDENTIFY INTENT: What is the user trying to accomplish? Are they looking for a specific product, comparing options, or seeking information?
-
-2. EXTRACT SLOTS: Identify key entities in the query:
-- Product type/category
-- Specifications (memory, size, processor, etc.)
-- Brand preferences
-- Price indicators
-- Usage requirements
-- Any other constraints
-
-3. GENERATE IMPROVED QUERIES: Create 5 variations of the original query that:
-- Preserve the core intent
-- Include all identified slots/entities
-- Use relevant domain-specific terminology
-- Add helpful context that might improve retrieval
-- Expand abbreviations and use alternative terms
-
-Return your analysis and queries in this format:
-
-INTENT: [Core user intent]
-SLOTS: [Key entity 1], [Key entity 2], [etc.]
-
-QUERIES:
-1. [First improved query]
-2. [Second improved query]
-3. [Third improved query]
-4. [Fourth improved query]
-5. [Fifth improved query with translation elements]
-"""
-
-PRODUCT_PROMPT = """### INSTRUCTION ###
-You are a JSON generation bot. Your task is to populate the JSON object below using the provided context of several products.
-- `response_type` must be "PRODUCT_LIST".
-- `message_text` present the recommended options based on the query nicely and ask the user to choose from the options.
-- The `products` array must contain an object for each and every product in the context.
-- For each product, the `description` should be a compelling, benefit-focused sentence that highlights its standout feature in marketing language - focus on what makes this product special and why a customer would want it.
-- Fill all fields from the context. Do not output anything other than the single JSON object.
-
-### JSON SCHEMA ###
-{{
-"response_type": "PRODUCT_LIST",
-"message_text": "string",
-"products": [
-    {{
-    "id": "string",  
-    "product_id": "string",
-    "name": "string",
-    "product_url": "string",
-    "thumbnail_url": "string",
-    "description": "string"
-    }}
-]
-}}
-
-### USER QUERY ###
-{question}
-
-### CONTEXT: PRODUCT DATA ###
-{context}
-"""
+    
 
 async def process_search_query(query: str, limit: int = 30, rerank_limit: int = 10, 
                         pipeline: SearchPipeline = SearchPipeline.FUSION_RRF) -> Dict[str, Any]:
@@ -386,26 +349,48 @@ async def process_search_query(query: str, limit: int = 30, rerank_limit: int = 
     # --- 1. Expand the query using LLM ---
     expansion_start_time = time.time()
     formatted_rewrite_prompt = REWRITE_PROMPT.format(question=query)
-    expanded_query_response = get_openai_completion(
+    raw_expanded_query_response_str = get_openai_completion(
         prompt=formatted_rewrite_prompt,
         operation_name="OpenAI Query Expansion"
     )
     expansion_duration_ms = (time.time() - expansion_start_time) * 1000
-    logger.info(f"Expanded Query Analysis: {expanded_query_response}")
+    logger.info(f"Raw Expanded Query Response from LLM: {raw_expanded_query_response_str}")
 
-    # Extract the actual queries from the structured response
-    expanded_queries = []
-    if expanded_query_response: # Check if the response is not None
-        for line in expanded_query_response.split('\n'):
-            if line.strip().startswith(('1.', '2.', '3.', '4.', '5.')):
-                expanded_queries.append(line.strip()[3:].strip())  # Remove the number and whitespace
+    expanded_query_data = None
+    slots = None
+    query_to_use = query # Default to original query
+
+    if raw_expanded_query_response_str:
+        cleaned_json_for_expansion = _extract_json_string_from_llm_output(raw_expanded_query_response_str)
+        if cleaned_json_for_expansion:
+            try:
+                expanded_query_data = json.loads(cleaned_json_for_expansion)
+                
+                improved_query_from_llm = expanded_query_data.get("improved_query")
+                if improved_query_from_llm and isinstance(improved_query_from_llm, str) and improved_query_from_llm.strip():
+                    query_to_use = improved_query_from_llm
+                else:
+                    logger.warning("No 'improved_query' in parsed LLM expansion or empty. Using original query.")
+
+                extracted_slots = expanded_query_data.get("slots")
+                if isinstance(extracted_slots, dict):
+                    slots = extracted_slots
+                else:
+                    logger.warning(f"'slots' in LLM expansion is not a dict or missing. Using empty slots. Received: {extracted_slots}")
+                
+                logger.info(f"Successfully parsed expanded query. Using: '{query_to_use}'. Slots: {slots}")
+
+            except json.JSONDecodeError as e:
+                logger.error(f"Error parsing JSON from query expansion: {e}. Cleaned string: '{cleaned_json_for_expansion}'. Raw response: '{raw_expanded_query_response}'")
+            except Exception as e: 
+                logger.error(f"Unexpected error processing expanded query response: {e}. Cleaned string: '{cleaned_json_for_expansion}'. Raw response: '{raw_expanded_query_response}'")
+        else:
+            logger.warning("Query expansion response was empty after cleaning. Using original query.")
     else:
-        logger.warning("OpenAI Query Expansion did not return a response.")
-
-    # Use the first expanded query or fall back to the original
-    query_to_use = expanded_queries[0] if expanded_queries else query
-    logger.info(f"Using expanded query: {query_to_use}")
+        logger.warning("OpenAI Query Expansion returned no response. Using original query.")
     
+    logger.info(f"Using query for search: {query_to_use}")
+    logger.info(f"Slots extracted: {slots if slots else 'None'}")
     # --- 2. Search and rerank ---
     search_rerank_start_time = time.time()
     original_results, final_results, status_message = search_and_rerank(
@@ -414,8 +399,10 @@ async def process_search_query(query: str, limit: int = 30, rerank_limit: int = 
     search_rerank_duration_ms = (time.time() - search_rerank_start_time) * 1000
     
     # Use the returned reranked results instead of original ones for better context
-    retrieved_docs = final_results[:3] if final_results else []
-    logging.info(f"Retrieved {retrieved_docs[0]}  for context.")
+    retrieved_docs = final_results[:rerank_limit] if final_results else []
+    # Use original search results for context
+    # retrieved_docs = original_results[:3] if original_results else []
+    logging.info(f"Retrieved {retrieved_docs[0]} as first item out of {len(retrieved_docs)} for context.")
     products_json = None
     json_gen_duration_ms = 0  # Initialize in case this step is skipped
     if retrieved_docs:
@@ -436,40 +423,46 @@ async def process_search_query(query: str, limit: int = 30, rerank_limit: int = 
                               f"THUMBNAIL: {thumbnail}\n" \
                               f"CONTENT: {doc.get('page_content', '')}...\n"
             structured_docs.append(structured_entry)
-        logging.info(f"Structured Documents for LLM: {structured_docs[0]}")
+        logging.info(f"Structured Documents for LLM: {structured_docs}")
         # Join the structured documents
         docs_content = "\n\n" + "\n\n".join(structured_docs)
-        
+        # need slots to be a JSON string for the prompt
+        slots_json_str = json.dumps(slots if isinstance(slots, dict) else {})
+
         # Format the prompt with the query and context
         formatted_prompt = PRODUCT_PROMPT.format(
-            question=query_to_use, context=docs_content
+            question=query_to_use, context=docs_content, slots_json=slots_json_str, # Pass the JSON string of slots
+
         )
         
         # --- 3. Get the structured response using get_openai_completion ---
         json_gen_start_time = time.time()
-        answer_content = get_openai_completion(
+        raw_product_json_response = get_openai_completion(
             prompt=formatted_prompt,
             operation_name="OpenAI Product JSON Generation"
         )
         json_gen_duration_ms = (time.time() - json_gen_start_time) * 1000
         
         logger.info(f"Final Query Used: {query_to_use}")
-        logger.info(f"Answer: {answer_content}")
+        logger.info(f"Answer: {raw_product_json_response}")
 
-        try:
-            if answer_content: # Check if answer_content is not None
-                products_json = json.loads(answer_content)
+    if raw_product_json_response:
+            cleaned_json_for_products = _extract_json_string_from_llm_output(raw_product_json_response)
+            if cleaned_json_for_products:
+                try:
+                    products_json = json.loads(cleaned_json_for_products)
+                except json.JSONDecodeError as e:
+                    logger.error(f"Error parsing JSON response for products: {e}. Cleaned string: '{cleaned_json_for_products}'. Raw response: '{raw_product_json_response}'")
             else:
-                logger.error("OpenAI Product JSON Generation did not return content.")
-                products_json = None # Ensure products_json is None if no content
-        except json.JSONDecodeError as e:
-            logger.error(f"Error parsing JSON response: {e}")
-            logger.error(f"Raw response: {answer_content}")
-    
+                logger.error("Product JSON response was empty after cleaning.")
+    else:
+            logger.error("OpenAI Product JSON Generation returned no response.")
+            
     # Construct the API response
     response = {
         "original_query": query,
         "expanded_query": query_to_use if query_to_use != query else None,
+        "extracted_slots": slots if slots else None,
         "status_message": status_message,
         "recommended_products": products_json
     }
@@ -482,5 +475,4 @@ async def process_search_query(query: str, limit: int = 30, rerank_limit: int = 
         f"  Search & Rerank: {search_rerank_duration_ms:.2f}ms\n"
         f"  Product JSON Generation: {json_gen_duration_ms:.2f}ms"
     )
-    
     return response

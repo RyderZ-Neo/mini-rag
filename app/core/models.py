@@ -3,12 +3,12 @@ from typing import List, Optional, Dict, Any
 from pydantic import BaseModel, Field, RootModel
 
 
-class SearchPipeline(str, Enum):
-    SEMANTIC = "Semantic Search (OpenAI Embeddings)"
-    FUSION_RRF = "Fusion Search (RRF)"
-    BM25_TO_SEMANTIC = "2-Step: BM25 → Semantic"
-    SEMANTIC_TO_BM25 = "2-Step: Semantic → BM25"
 
+class SearchPipeline(str, Enum):
+    SEMANTIC = "SEMANTIC"
+    FUSION_RRF = "FUSION_RRF"
+    BM25_TO_SEMANTIC = "BM25_TO_SEMANTIC"
+    SEMANTIC_TO_BM25 = "SEMANTIC_TO_BM25"
 
 class SearchRequest(BaseModel):
     query: str = Field(..., description="Search query text")
