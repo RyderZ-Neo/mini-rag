@@ -381,9 +381,9 @@ async def process_search_query(query: str, limit: int = 30, rerank_limit: int = 
                 logger.info(f"Successfully parsed expanded query. Using: '{query_to_use}'. Slots: {slots}")
 
             except json.JSONDecodeError as e:
-                logger.error(f"Error parsing JSON from query expansion: {e}. Cleaned string: '{cleaned_json_for_expansion}'. Raw response: '{raw_expanded_query_response}'")
+                logger.error(f"Error parsing JSON from query expansion: {e}. Cleaned string: '{cleaned_json_for_expansion}'. Raw response: '{raw_expanded_query_response_str}'")
             except Exception as e: 
-                logger.error(f"Unexpected error processing expanded query response: {e}. Cleaned string: '{cleaned_json_for_expansion}'. Raw response: '{raw_expanded_query_response}'")
+                logger.error(f"Unexpected error processing expanded query response: {e}. Cleaned string: '{cleaned_json_for_expansion}'. Raw response: '{raw_expanded_query_response_str}'")
         else:
             logger.warning("Query expansion response was empty after cleaning. Using original query.")
     else:
