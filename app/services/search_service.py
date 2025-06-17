@@ -135,7 +135,7 @@ def initialize_models():
     return qdrant_client, openai_embeddings, cross_encoder, None
 
 
-def search_and_rerank(query, limit=50, rerank_limit=10, pipeline="SEMANTIC"):
+def search_and_rerank(query, limit=50, rerank_limit=10, pipeline="SEMANTIC", do_rerank=True):
     """Search Qdrant and rerank results using cross-encoder with selectable pipeline"""
     if not query:
         return [], [], "Error: Query is required."
@@ -296,37 +296,49 @@ def search_and_rerank(query, limit=50, rerank_limit=10, pipeline="SEMANTIC"):
                 
         original_results = retrieved_docs.copy()
         
-        # Rerank top results
-        rerank_start = time.time()
-        top_items_for_reranking = retrieved_docs[:rerank_limit]
+        # Rerank top results only if do_rerank is True
+        rerank_elapsed = 0
+        final_results = original_results # Default to original results if no reranking
         
-        if top_items_for_reranking:
-            sentence_pairs = [[query, item['page_content']] for item in top_items_for_reranking]
-            rerank_scores = cross_encoder_model.predict(sentence_pairs)
+        if do_rerank and rerank_limit > 0:
+            rerank_start = time.time()
+            top_items_for_reranking = retrieved_docs[:rerank_limit]
             
-            # Sort by new scores
-            reranked_items = sorted(zip(rerank_scores, top_items_for_reranking), 
-                                  key=lambda x: x[0], reverse=True)
-            
-            # Update retrieved docs with reranked ones
-            final_results = []
-            for score, item in reranked_items:
-                item['rerank_score'] = score
-                final_results.append(item)
-            
-            rerank_elapsed = (time.time() - rerank_start) * 1000
-        else:
-            final_results = retrieved_docs
-            rerank_elapsed = 0
+            if top_items_for_reranking:
+                sentence_pairs = [[query, item['page_content']] for item in top_items_for_reranking]
+                rerank_scores = cross_encoder_model.predict(sentence_pairs)
+                
+                # Sort by new scores
+                reranked_items = sorted(zip(rerank_scores, top_items_for_reranking), 
+                                      key=lambda x: x[0], reverse=True)
+                
+                # Update retrieved docs with reranked ones
+                final_results = []
+                for score, item in reranked_items:
+                    item['rerank_score'] = score
+                    final_results.append(item)
+                
+                rerank_elapsed = (time.time() - rerank_start) * 1000
         
         elapsed_ms = (time.time() - start_time) * 1000
-        status_message = (f"Found {len(hits)} results and reranked top {rerank_limit}. "
-                         f"⏱️ [Search: {search_elapsed:.1f}ms, Rerank: {rerank_elapsed:.1f}ms, "
-                         f"Total: {elapsed_ms:.1f}ms]")
         
-        log_performance("Search and rerank", query, elapsed_ms, 
-                      f"search: {search_elapsed:.1f}ms, rerank: {rerank_elapsed:.1f}ms, "
-                      f"hits: {len(hits)}, reranked: {min(len(hits), rerank_limit)}")
+        # Update status message based on whether reranking was performed
+        if do_rerank:
+            status_message = (f"Found {len(hits)} results and reranked top {rerank_limit}. "
+                             f"⏱️ [Search: {search_elapsed:.1f}ms, Rerank: {rerank_elapsed:.1f}ms, "
+                             f"Total: {elapsed_ms:.1f}ms]")
+        else:
+            status_message = (f"Found {len(hits)} results (no reranking). "
+                             f"⏱️ [Search: {search_elapsed:.1f}ms, Total: {elapsed_ms:.1f}ms]")
+        
+        # Log performance with appropriate message based on reranking status
+        if do_rerank:
+            log_performance("Search and rerank", query, elapsed_ms, 
+                          f"search: {search_elapsed:.1f}ms, rerank: {rerank_elapsed:.1f}ms, "
+                          f"hits: {len(hits)}, reranked: {min(len(hits), rerank_limit)}")
+        else:
+            log_performance("Search without rerank", query, elapsed_ms, 
+                          f"search: {search_elapsed:.1f}ms, hits: {len(hits)}")
 
         return original_results, final_results, status_message
 
@@ -341,7 +353,8 @@ def search_and_rerank(query, limit=50, rerank_limit=10, pipeline="SEMANTIC"):
     
 
 async def process_search_query(query: str, limit: int = 30, rerank_limit: int = 10, 
-                        pipeline: SearchPipeline = SearchPipeline.FUSION_RRF) -> Dict[str, Any]:
+                        pipeline: SearchPipeline = SearchPipeline.FUSION_RRF,
+                        do_rerank: bool = True) -> Dict[str, Any]:
     """Process a search query and return results with product recommendations"""
     overall_process_start_time = time.time()
     logger.info(f"Original User Query: {query}")
@@ -394,14 +407,14 @@ async def process_search_query(query: str, limit: int = 30, rerank_limit: int = 
     # --- 2. Search and rerank ---
     search_rerank_start_time = time.time()
     original_results, final_results, status_message = search_and_rerank(
-        query_to_use, limit, rerank_limit, pipeline
+        query_to_use, limit, rerank_limit, pipeline, do_rerank
     )
     search_rerank_duration_ms = (time.time() - search_rerank_start_time) * 1000
     
-    # Use the returned reranked results instead of original ones for better context
-    retrieved_docs = final_results[:rerank_limit] if final_results else []
+    # # Use the returned reranked results instead of original ones for better context
+    # retrieved_docs = final_results[:rerank_limit] if final_results else []
     # Use original search results for context
-    # retrieved_docs = original_results[:3] if original_results else []
+    retrieved_docs = original_results[:10] if original_results else [] # Testing with top 10 results with reranking for context
     # logging.info(f"Retrieved {retrieved_docs[0]} as first item out of {len(retrieved_docs)} for context.")
     products_json = None
     json_gen_duration_ms = 0  # Initialize in case this step is skipped

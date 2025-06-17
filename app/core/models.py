@@ -12,11 +12,15 @@ class SearchPipeline(str, Enum):
 
 class SearchRequest(BaseModel):
     query: str = Field(..., description="Search query text")
-    limit: int = Field(30, description="Maximum number of results to return")
+    limit: int = Field(10, description="Maximum number of results to return")
     rerank_limit: int = Field(10, description="Maximum number of results to rerank")
     pipeline: SearchPipeline = Field(
         default=SearchPipeline.SEMANTIC, 
         description="Search pipeline to use"
+    )
+    do_rerank: bool = Field(
+        default=False,
+        description="Whether to rerank the search results"
     )
 
 
