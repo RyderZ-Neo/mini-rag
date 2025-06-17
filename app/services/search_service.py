@@ -135,7 +135,7 @@ def initialize_models():
     return qdrant_client, openai_embeddings, cross_encoder, None
 
 
-def search_and_rerank(query, limit=30, rerank_limit=10, pipeline=None):
+def search_and_rerank(query, limit=50, rerank_limit=10, pipeline="SEMANTIC"):
     """Search Qdrant and rerank results using cross-encoder with selectable pipeline"""
     if not query:
         return [], [], "Error: Query is required."
@@ -182,12 +182,12 @@ def search_and_rerank(query, limit=30, rerank_limit=10, pipeline=None):
                 models.Prefetch(
                     query=query_vector,
                     using="openai_text_embedding_large_v3",
-                    limit=40,
+                    limit=30,
                 ),
                 models.Prefetch(
                     query=models.SparseVector(**bm25_query.as_object()),
                     using="bm25",
-                    limit=40,
+                    limit=30,
                 ),
             ]
             search_params = {    
@@ -402,7 +402,7 @@ async def process_search_query(query: str, limit: int = 30, rerank_limit: int = 
     retrieved_docs = final_results[:rerank_limit] if final_results else []
     # Use original search results for context
     # retrieved_docs = original_results[:3] if original_results else []
-    logging.info(f"Retrieved {retrieved_docs[0]} as first item out of {len(retrieved_docs)} for context.")
+    # logging.info(f"Retrieved {retrieved_docs[0]} as first item out of {len(retrieved_docs)} for context.")
     products_json = None
     json_gen_duration_ms = 0  # Initialize in case this step is skipped
     if retrieved_docs:
@@ -423,9 +423,10 @@ async def process_search_query(query: str, limit: int = 30, rerank_limit: int = 
                               f"THUMBNAIL: {thumbnail}\n" \
                               f"CONTENT: {doc.get('page_content', '')}...\n"
             structured_docs.append(structured_entry)
-        logging.info(f"Structured Documents for LLM: {structured_docs}")
+        # logging.info(f"Structured Documents for LLM: {structured_docs}")
         # Join the structured documents
         docs_content = "\n\n" + "\n\n".join(structured_docs)
+        logging.info(f"First Structured document for context {docs_content}...")
         # need slots to be a JSON string for the prompt
         slots_json_str = json.dumps(slots if isinstance(slots, dict) else {})
 

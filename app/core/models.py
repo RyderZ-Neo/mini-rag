@@ -15,7 +15,7 @@ class SearchRequest(BaseModel):
     limit: int = Field(30, description="Maximum number of results to return")
     rerank_limit: int = Field(10, description="Maximum number of results to rerank")
     pipeline: SearchPipeline = Field(
-        default=SearchPipeline.FUSION_RRF, 
+        default=SearchPipeline.SEMANTIC, 
         description="Search pipeline to use"
     )
 
