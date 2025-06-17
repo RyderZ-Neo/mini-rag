@@ -2,7 +2,7 @@ from fastapi import APIRouter, HTTPException, status, Depends, Form
 from fastapi.responses import JSONResponse
 from typing import Optional
 
-from app.core.models import SearchResponse, OpenAIResponse, SearchPipeline
+from app.core.models import SearchResponse, OpenAIResponse, SearchPipeline, SearchRequest
 from app.services.search_service import process_search_query
 from app.core.utils import convert_numpy_types
 
